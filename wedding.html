@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<title>王俊翔 & 汤杏杏 · 婚礼倒计时</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Noto Serif SC",serif}
+html,body{height:100%;overflow:hidden;color:#fff}
+
+/* 喜庆红金浅色背景，去掉黑色 */
+.bg-main{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background: linear-gradient(160deg,#ff3b4e 0%,#e62b3e 40%,#ffc857 100%);
+  z-index:-4;
+}
+.bg-light1{
+  position:fixed;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(255,255,200,0.3) 0%,transparent 65%);
+  animation:rotate 40s linear infinite;z-index:-3;
+}
+.bg-light2{
+  position:fixed;top:-30%;left:-30%;width:160%;height:160%;
+  background:radial-gradient(circle,rgba(255,220,150,0.25) 0%,transparent 60%);
+  animation:rotate 35s linear infinite reverse;z-index:-2;
+}
+@keyframes rotate{to{transform:rotate(360deg)}}
+
+.wrap{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px;text-align:center;
+  perspective:1200px;
+}
+.card{
+  background:rgba(255,255,255,0.15);
+  border:2px solid rgba(255,215,0,0.6);
+  border-radius:28px;
+  padding:50px 35px;
+  max-width:650px;width:94%;
+  backdrop-filter:blur(12px);
+  box-shadow:0 0 60px rgba(255,215,0,0.3);
+  position:relative;overflow:hidden;
+  animation:cardShow 2s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes cardShow{
+  0%{opacity:0;transform:translateY(60px) scale(0.9)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+.card::before{
+  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,220,0.2),transparent);
+  animation:shiny 7s linear infinite;
+}
+@keyframes shiny{to{left:100%}}
+
+.title{
+  font-family:"Ma Shan Zheng",cursive;
+  font-size:clamp(2.4rem,7vw,3.6rem);
+  color:#fff8cc;
+  text-shadow:0 0 20px rgba(255,215,0,0.8);
+  margin-bottom:20px;
+}
+.sub-title{
+  font-size:clamp(1.2rem,3.5vw,1.5rem);
+  color:#fff;letter-spacing:6px;margin-bottom:30px;
+}
+
+/* 祝福语 */
+.words-box{
+  height:120px;position:relative;margin:30px 0;
+  overflow:hidden;
+}
+.word-item{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;line-height:2;color:#fff;
+  opacity:0;transform:translateY(20px);
+  transition:all 1s ease;
+}
+.word-item.active{opacity:1;transform:translateY(0)}
+
+/* 信息 + 只显示天数 */
+.info-panel{
+  margin-top:20px;padding-top:20px;
+  border-top:1px solid rgba(255,255,255,0.3);
+}
+.couple{
+  font-size:1.4rem;margin-bottom:12px;color:#fff;
+}
+.wed-info{
+  font-size:1.1rem;margin:8px 0;color:#fff;
+}
+.count-box{
+  margin-top:20px;
+  font-size:3.5rem;
+  color:#fff800;
+  font-weight:bold;
+  text-shadow:0 0 15px rgba(255,248,0,0.7);
+}
+
+/* 流星：小圆点+细长尾巴，斜向划过 */
+.meteor {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #fff, 0 0 12px rgba(255,215,0,0.6);
+  pointer-events: none;
+  z-index: 1;
+}
+.meteor::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:-80px;
+  width:80px;
+  height:1px;
+  background:linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+  transform:translateY(-50%);
+}
+@keyframes meteorMove {
+  0% {
+    transform: translate(-100px,-100px) rotate(20deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% {
+    transform: translate(100vw,100vh) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+/* 正爱心飘落 */
+.heart {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background-color: #ff2e63;
+  transform: rotate(45deg);
+  box-shadow: 0 0 12px 3px rgba(255,215,0,0.6);
+  pointer-events: none;
+  z-index: 1;
+  animation: heartFall 4s ease-in-out infinite;
+}
+.heart::before,.heart::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ff2e63;
+  border-radius: 50%;
+}
+.heart::before { top: -10px; left: 0; }
+.heart::after  { top: 0; left: -10px; }
+
+@keyframes heartFall {
+  0% { transform: rotate(45deg) translateY(-100vh); opacity:0; }
+  10%{opacity:1;}
+  90%{opacity:1;}
+  100%{transform: rotate(45deg) translateY(100vh); opacity:0;}
+}
+
+/* 烟花 */
+.firework{
+  position:fixed;width:5px;height:5px;border-radius:50%;pointer-events:none;
+}
+.pop-bless{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,0.25);
+  border:1px solid rgba(255,215,0,0.6);
+  border-radius:12px;
+  padding:12px 24px;color:#fff;font-size:1rem;
+  opacity:0;transition:all 0.8s;white-space:nowrap;
+}
+.pop-bless.show{opacity:1;bottom:50px}
+</style>
+</head>
+<body>
+<div class="bg-main"></div>
+<div class="bg-light1"></div>
+<div class="bg-light2"></div>
+
+<div class="wrap">
+  <div class="card">
+    <h1 class="title">婚礼倒计时</h1>
+    <div class="sub-title">王俊翔 &nbsp;❤️&nbsp; 汤杏杏</div>
+
+    <div class="words-box" id="wordsBox">
+      <div class="word-item active">
+        良缘夙缔，两姓联姻<br>
+        合肥结缘，以爱之名，共度余生
+      </div>
+      <div class="word-item">
+        冷暖有相知，喜乐有分享<br>
+        同量天地宽，共度日月长
+      </div>
+      <div class="word-item">
+        执子之手，与子偕老<br>
+        新婚大吉，岁岁平安
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <div class="wed-info">婚礼时间：2026年06月14日</div>
+      <div class="wed-info">婚礼地点：安徽 · 合肥</div>
+      <div class="count-box">
+        距离婚礼还有 <span id="day">00</span> 天
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pop-bless" id="popBless">💐 祝王俊翔 & 汤杏杏 新婚大喜，百年好合 💐</div>
+
+<script>
+const items=document.querySelectorAll('.word-item');
+let idx=0;
+setInterval(()=>{
+  items[idx].classList.remove('active');
+  idx=(idx+1)%items.length;
+  items[idx].classList.add('active');
+},6000);
+
+// 只算天数
+const weddingDate=new Date("2026-06-14T08:00:00+08:00").getTime();
+function updateCount(){
+  const now=Date.now();
+  let diff=weddingDate-now;
+  if(diff<0)diff=0;
+  const d=Math.floor(diff/(1000*60*60*24));
+  document.getElementById('day').innerText=String(d).padStart(2,'0');
+}
+updateCount();
+setInterval(updateCount, 3600000);
+
+// 创建流星（点状+尾巴）
+function createMeteor() {
+  const meteor = document.createElement('div');
+  meteor.className = 'meteor';
+  meteor.style.animation = 'meteorMove 2.5s linear forwards';
+  meteor.style.top = Math.random()*40 + 'vh';
+  document.body.appendChild(meteor);
+  setTimeout(()=>meteor.remove(),2500);
+}
+setInterval(createMeteor, 3500);
+
+// 创建爱心
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.style.left = Math.random()*100 + 'vw';
+  heart.style.animationDuration = (Math.random()*2+3)+'s';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart, 1000);
+
+// 烟花
+function firework(){
+  const x=Math.random()*innerWidth;
+  const y=Math.random()*innerHeight*0.6;
+  const colors=['#fff','#ffd700','#ff2e63'];
+  for(let i=0;i<20;i++){
+    const f=document.createElement('div');
+    f.className='firework';
+    f.style.background=colors[Math.floor(Math.random()*colors.length)];
+    f.style.boxShadow=`0 0 6px ${f.style.background}`;
+    document.body.appendChild(f);
+    const a=(Math.PI*2/20)*i;
+    const s=Math.random()*80+50;
+    const tx=x+Math.cos(a)*s;
+    const ty=y+Math.sin(a)*s;
+    f.animate([
+      {left:x+'px',top:y+'px',opacity:1},
+      {left:tx+'px',top:ty+'px',opacity:0}
+    ],{duration:1500,easing:'ease-out'});
+    setTimeout(()=>f.remove(),1500);
+  }
+}
+setInterval(firework,2000);
+
+// 弹窗
+const pop=document.getElementById('popBless');
+setInterval(()=>{
+  pop.classList.add('show');
+  setTimeout(()=>pop.classList.remove('show'),3000);
+},8000);
+</script>
+</body>
+</html>
